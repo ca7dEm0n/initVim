@@ -11,6 +11,6 @@
 ## 快速部署
 Centos环境下：
 ```
-curl https://github.com/ca7dEm0n/initVim/blob/master/installVim.sh |bash
+curl https://raw.githubusercontent.com/ca7dEm0n/initVim/master/installVim.sh |bash
 ```
 
