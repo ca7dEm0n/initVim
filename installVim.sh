@@ -3,6 +3,7 @@ molokaiPath="/root/.vim/colors/molokai.vim"
 colorsPath="/root/.vim/colors"
 vimConfigPath="/etc/vimrc"
 
+
 function createFile() {
     local file=$1
     if [ ! -d "${file}" ];then
@@ -20,8 +21,6 @@ function writeVimConfig() {
     fi
 }
 
-# create files
-createFile ${colorsPath}
 
 vimSetup=$(cat << EOF
 set encoding=utf-8
@@ -79,12 +78,6 @@ nnoremap <F11> :set nonu<CR>
 
 EOF
 )
-
-echo "$vimSetup" |while read line;do
-    writeVimConfig "${line}" ${vimConfigPath}
-done
-
-
 
 
 cat <<EOF > ${molokaiPath}
@@ -357,10 +350,22 @@ end
 set background=dark
 EOF
 
+read -p "在当前系统所有用户初始化VIM?(Y/n) " ini
+echo $ini |grep -qwEi "y" && sock='y'
+if [ ${sock} == 'y' ]
+then
+    createFile ${colorsPath}
+    
+    echo "$vimSetup" |while read line;do
+        writeVimConfig "${line}" ${vimConfigPath}
+    done
 
     
-for u in $(grep home /etc/passwd |awk -F ':' '{print $1}')
-do
-    createFile "/home/$u/.vim/colors"
-    \cp ${molokaiPath} /home/$u/.vim/colors/molokai.vim
-done
+    for u in $(grep home /etc/passwd |awk -F ':' '{print $1}')
+    do
+        createFile "/home/$u/.vim/colors"
+        \cp ${molokaiPath} /home/$u/.vim/colors/molokai.vim
+    done
+    echo "[!] 初始化成功"
+fi
+
