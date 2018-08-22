@@ -3,83 +3,6 @@ molokaiPath="/root/.vim/colors/molokai.vim"
 colorsPath="/root/.vim/colors"
 vimConfigPath="/etc/vimrc"
 
-
-function createFile() {
-    local file=$1
-    if [ ! -d "${file}" ];then
-        echo "[!] No found " ${file}
-        echo "[!] Create now"
-        mkdir -p ${file}
-    fi
-}
-
-function writeVimConfig() {
-    if ! $(grep -q "$1" $2);
-    then
-        echo "[!] Vim Config Write: " $1
-        echo "$1" >> $2
-    fi
-}
-
-
-vimSetup=$(cat << EOF
-set encoding=utf-8
-set textwidth=0
-set softtabstop=4
-set autoindent
-set backspace=indent,eol,start
-set incsearch
-set ignorecase
-set paste
-set nu
-set cursorcolumn
-set tabstop=4
-set shiftwidth=4
-set cursorline
-set ignorecase
-set ruler
-set wildmenu
-set commentstring=\\\\ #\\\\ \%s
-set foldlevel=0
-set clipboard+=unnamed
-set showmatch
-set expandtab
-syntax enable
-syntax on
-set t_Co=256
-set background=dark
-colorscheme molokai
-let g:AutoComplPop_MappingDriven = 1
-let mapleader = "\\\\<Space>"
-
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-
-nmap <Leader><Leader> i
-
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>q :q!<CR>
-nnoremap <Leader>n :tabe<Space>
-nnoremap <Leader>e :Explore<Space>
-
-nnoremap <Leader>1 <C-W>h<CR>
-nnoremap <Leader>2 <C-W>j<CR>
-nnoremap <Leader>3 <C-W>l<CR>
-nnoremap <Leader>5 <C-W>k<CR>
-
-nnoremap <CR> G
-nnoremap <BS> gg
-nnoremap <F5> :!python %<CR>
-nnoremap <F6> :!sh %<CR>
-nnoremap <F10> :set nu<CR>
-nnoremap <F11> :set nonu<CR>
-
-EOF
-)
-
-
 cat <<EOF > ${molokaiPath}
 hi clear
 
@@ -349,6 +272,83 @@ end
 " https://groups.google.com/forum/#!msg/vim_dev/afPqwAFNdrU/nqh6tOM87QUJ
 set background=dark
 EOF
+
+function createFile() {
+    local file=$1
+    if [ ! -d "${file}" ];then
+        echo "[!] No found " ${file}
+        echo "[!] Create now"
+        mkdir -p ${file}
+    fi
+}
+
+function writeVimConfig() {
+    if ! $(grep -q "$1" $2);
+    then
+        echo "[!] Vim Config Write: " $1
+        echo "$1" >> $2
+    fi
+}
+
+
+vimSetup=$(cat << EOF
+set encoding=utf-8
+set textwidth=0
+set softtabstop=4
+set autoindent
+set backspace=indent,eol,start
+set incsearch
+set ignorecase
+set paste
+set nu
+set cursorcolumn
+set tabstop=4
+set shiftwidth=4
+set cursorline
+set ignorecase
+set ruler
+set wildmenu
+set commentstring=\\\\ #\\\\ \%s
+set foldlevel=0
+set clipboard+=unnamed
+set showmatch
+set expandtab
+syntax enable
+syntax on
+set t_Co=256
+set background=dark
+colorscheme molokai
+let g:AutoComplPop_MappingDriven = 1
+let mapleader = "\\\\<Space>"
+
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+
+nmap <Leader><Leader> i
+
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q!<CR>
+nnoremap <Leader>n :tabe<Space>
+nnoremap <Leader>e :Explore<Space>
+
+nnoremap <Leader>1 <C-W>h<CR>
+nnoremap <Leader>2 <C-W>j<CR>
+nnoremap <Leader>3 <C-W>l<CR>
+nnoremap <Leader>5 <C-W>k<CR>
+
+nnoremap <CR> G
+nnoremap <BS> gg
+nnoremap <F5> :!python %<CR>
+nnoremap <F6> :!sh %<CR>
+nnoremap <F10> :set nu<CR>
+nnoremap <F11> :set nonu<CR>
+
+EOF
+)
+
+
 
 read -p "在当前系统所有用户初始化VIM?(Y/n) " ini
 echo $ini |grep -qwEi "y" && sock='y'
